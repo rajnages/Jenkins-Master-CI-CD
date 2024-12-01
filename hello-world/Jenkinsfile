@@ -18,14 +18,20 @@ pipeline {
         stage('Build') {
             steps {
                 // Run Maven build
+                """
+                cd hello-world
                 sh 'mvn clean compile'
+                """
             }
         }
 
         stage('Test') {
             steps {
                 // Run Maven tests
+                """
+                cd hello-world
                 sh 'mvn test'
+                """
             }
             post {
                 // Save test results
@@ -38,7 +44,10 @@ pipeline {
         stage('Package') {
             steps {
                 // Create JAR file
+                """
+                cd hello-world
                 sh 'mvn package'
+                """
 
                 // Archive the artifacts
                 archiveArtifacts artifacts: 'target/*.jar',
