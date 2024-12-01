@@ -82,3 +82,83 @@ Jobs are the heart of Jenkins's build process. A job can be considered as a part
 ########################Jenkins file ##############################################
  # Pipiline script syntax
 pipeline => agent any => stages => stage => steps
+
+#################################################################
+
+
+# Plugins all
+Pipeline Plugins:
+Pipeline (previously known as Workflow)
+Pipeline Utility Steps
+Blue Ocean - provides a modern, visual interface for pipelines
+
+Source Code Management:
+Git
+GitHub Integration
+Bitbucket Integration
+GitLab
+
+Build and Testing:
+Maven Integration
+Gradle
+JUnit
+Docker
+NodeJS
+
+SonarQube Scanner
+Ansible
+AWS Related:
+AWS CodeBuild
+Amazon Inspector
+AWS Steps [2]
+AWS Pipeline Steps
+AWS Credentials
+
+Security and Authentication:
+Credentials
+Role-based Authorization Strategy
+LDAP
+Active Directory
+
+Notification and Reporting:
+Email Extension
+Slack Notification
+Build Timestamp
+Build Name Setter
+HTML Publisher
+
+Code Quality and Analysis:
+Checkstyle
+FindBugs
+PMD
+Cobertura
+Warnings Next Generation
+
+Artifact Management:
+Artifactory
+Nexus Artifact Uploader
+
+Utility Plugins:
+Workspace Cleanup
+Build Timeout
+AnsiColor - adds color to console output
+Parameterized Trigger
+Copy Artifact
+
+Pipeline Development:
+Pipeline Stage View
+Pipeline Graph View
+Pipeline: GitHub Groovy Libraries
+Pipeline: Shared Groovy Libraries
+
+Infrastructure and Configuration:
+Terraform
+Kubernetes
+Configuration File Provider
+Credentials Binding
+
+Monitoring and Diagnostics:
+Monitoring
+Performance
+Metrics
+Dashboard View
