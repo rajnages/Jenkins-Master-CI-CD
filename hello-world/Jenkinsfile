@@ -24,6 +24,14 @@ pipeline {
             }
         }
 
+        stage("Printing output"){
+            steps{
+                dir('hello-world'){
+                    sh 'java -jar target/hello-world.jar'
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 // Run Maven tests
