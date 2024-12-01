@@ -54,7 +54,7 @@ pipeline {
         stage("Run Application") {
             steps {
                 dir('hello-world') {
-                    sh 'java -jar target/hello-world.jar'
+                    sh 'java -jar target/*.jar'
                 }
             }
         }
