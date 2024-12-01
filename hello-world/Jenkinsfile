@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'M3' // Make sure you have Maven configured in Jenkins with the name 'M3'
+        jdk 'JDK11' // Make sure you have JDK configured in Jenkins with the name 'JDK11'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Get code from GitHub repository
+                git branch: 'main',
+                    url: 'https://github.com/rajnages/hello-world.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Run Maven build
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run Maven tests
+                sh 'mvn test'
+            }
+            post {
+                // Save test results
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                // Create JAR file
+                sh 'mvn package'
+
+                // Archive the artifacts
+                archiveArtifacts artifacts: 'target/*.jar',
+                                 fingerprint: true
+            }
+        }
+
+        // stage('Code Analysis') {
+        //     steps {
+        //         // SonarQube analysis
+        //         withSonarQubeEnv('SonarQube') {
+        //             sh 'mvn sonar:sonar'
+        //         }
+        //     }
+        // }
+
+        stage('Deploy to Dev') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Deploying to Development environment...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('Deploy to Prod') {
+            when {
+                branch 'main'
+            }
+            steps {
+                // Add approval step
+                input message: 'Approve Production Deployment?'
+
+                echo 'Deploying to Production environment...'
+                // Add your production deployment steps here
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded! Sending notifications...'
+            // Add success notifications here
+        }
+
+        failure {
+            echo 'Pipeline failed! Sending notifications...'
+            // Add failure notifications here
+        }
+
+        always {
+            // Clean workspace
+            cleanWs()
+        }
+    }
+}
