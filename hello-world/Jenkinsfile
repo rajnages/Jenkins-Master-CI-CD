@@ -6,12 +6,15 @@ pipeline {
         jdk 'JDK17'
     }
 
+    environment{
+        GIT_URL = "https://github.com/rajnages/Jenkins-Master-CI-CD.git"
+    }
     stages {
         stage('Checkout') {
             steps {
                 // Get code from GitHub repository
                 git branch: 'main',
-                    url: 'https://github.com/rajnages/Jenkins-Master-CI-CD.git'
+                    url: GIT_URL
             }
         }
 

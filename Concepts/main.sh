@@ -33,7 +33,7 @@ sudo apt update
 2. Run the following command to install Java:
 sudo apt install default-jre
 3. Download the latest version of Jenkins from the official website.
- sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
     https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
     https://pkg.jenkins.io/debian-stable binary/ | sudo tee \

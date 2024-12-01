@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS'  // Ensure you have NodeJS configured in Jenkins with the name 'NodeJS'
+    }
+
+    environment {
+        APP_NAME = 'node-jenkins-app'
+        DEPLOY_DIR = '/var/www/app'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository
+                
+                git 'https://github.com/rajnages/Jenkins-Master-CI-CD.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install Node.js dependencies
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                sh 'npm test'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Optionally, you can add build steps like transpiling or bundling
+                echo 'Building the application...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy to server
+                sh """
+                    echo 'Deploying to production...'
+                    // cp -r * $DEPLOY_DIR
+                    # Here you can add other deployment steps, e.g., restarting services
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded! Deployment successful.'
+        }
+
+        failure {
+            echo 'Pipeline failed! Please check the logs.'
+        }
+
+        always {
+            // Clean workspace
+            cleanWs()
+        }
+    }
+}
