@@ -24,14 +24,6 @@ pipeline {
             }
         }
 
-        stage("Printing output"){
-            steps{
-                dir('hello-world'){
-                    sh 'java -jar target/hello-world.jar'
-                }
-            }
-        }
-
         stage('Test') {
             steps {
                 // Run Maven tests
@@ -55,6 +47,14 @@ pipeline {
                     // Archive the artifacts
                     archiveArtifacts artifacts: 'target/*.jar',
                                      fingerprint: true
+                }
+            }
+        }
+
+        stage("Run Application") {
+            steps {
+                dir('hello-world') {
+                    sh 'java -jar target/hello-world.jar'
                 }
             }
         }
