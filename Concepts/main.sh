@@ -41,6 +41,14 @@ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
 sudo apt-get update
 sudo apt-get install fontconfig openjdk-17-jre
 sudo apt-get install jenkins
+
+# maven
+sudo apt update
+sudo apt install maven
+# Maven Environment Variables
+export M2_HOME=/usr/share/maven
+export PATH=$M2_HOME/bin:$PATH
+
 4. Start Jenkins by running the following command:
 sudo systemctl start jenkins
 5. Enable Jenkins to start on boot by running the following command:
