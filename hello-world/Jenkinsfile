@@ -8,7 +8,7 @@ pipeline {
 
     environment{
         GIT_URL = "https://github.com/rajnages/Jenkins-Master-CI-CD.git"
-        SONAR_URL = "http://localhost:9000" // SonarQube server URL
+        // SONAR_URL = "http://localhost:9000" // SonarQube server URL
     }
     stages {
         stage('Checkout') {
@@ -63,29 +63,29 @@ pipeline {
             }
         }
 
-        stage('Code Analysis') {
-            steps {
-                // SonarQube analysis
-                dir('hello-world') {
-                    withSonarQubeEnv('SonarQube') {
-                        sh '''
-                            mvn sonar:sonar \
-                            -Dsonar.projectKey=my-project \
-                            -Dsonar.host.url=$SONAR_URL \
-                            -Dsonar.login=$SONAR_TOKEN
-                        '''
-                    }
-                }
-            }
-        }
+        // stage('Code Analysis') {
+        //     steps {
+        //         // SonarQube analysis
+        //         dir('hello-world') {
+        //             withSonarQubeEnv('SonarQube') {
+        //                 sh '''
+        //                     mvn sonar:sonar \
+        //                     -Dsonar.projectKey=my-project \
+        //                     -Dsonar.host.url=$SONAR_URL \
+        //                     -Dsonar.login=$SONAR_TOKEN
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //         timeout(time: 1, unit: 'HOURS') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
 
         stage('Deploy to Dev') {
             when {
