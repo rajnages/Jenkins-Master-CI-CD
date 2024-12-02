@@ -39,13 +39,17 @@ pipeline {
                     }
                     echo "NODE_ENV set to ${env.NODE_ENV}"
                 }
-                sh 'npm install'
+                dir('node-app'){
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                dir('node-app'){
+                    sh 'npm test'
+                }
             }
             post {
                 always {
@@ -61,7 +65,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npm run build'  // Build the application
+                dir('node-app'){
+                    sh 'npm run build'  // Build the application
+                }
             }
         }
 
