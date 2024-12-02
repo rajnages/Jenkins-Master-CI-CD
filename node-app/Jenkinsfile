@@ -1,0 +1,99 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS'
+    }
+
+    environment {
+        GIT_URL = "https://github.com/rajnages/Jenkins-Master-CI-CD.git"
+        BRANCH = "main"
+        NODE_ENV = "development"  // Default to development
+    }
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deployment Environment')
+    }
+
+    options {
+        timestamps() // Add timestamps to logs
+        timeout(time: 2, unit: 'HOURS') // Timeout after 2 hours
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Keep only the last 10 builds
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: BRANCH, url: GIT_URL
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    if (params.ENVIRONMENT == 'prod') {
+                        env.NODE_ENV = 'production'
+                    } else if (params.ENVIRONMENT == 'qa') {
+                        env.NODE_ENV = 'qa'
+                    }
+                    echo "NODE_ENV set to ${env.NODE_ENV}"
+                }
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+            post {
+                always {
+                    junit '**/test-results/**/*.xml'
+                    publishHTML(target: [
+                        reportName: 'Test Coverage',
+                        reportDir: 'coverage',
+                        reportFiles: 'index.html'
+                    ])
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'  // Build the application
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    if (params.ENVIRONMENT == 'dev') {
+                        echo 'Deploying to Development'
+                    } else if (params.ENVIRONMENT == 'qa') {
+                        echo 'Deploying to QA'
+                    } else if (params.ENVIRONMENT == 'prod') {
+                        input message: 'Approve Production Deployment?'
+                        echo 'Deploying to Production'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded! Deployment successful.'
+            // slackSend(channel: '#your-channel', message: "Build succeeded for ${env.JOB_NAME} build ${env.BUILD_NUMBER}")
+        }
+
+        failure {
+            echo 'Pipeline failed! Please check the logs.'
+            // slackSend(channel: '#your-channel', message: "Build failed for ${env.JOB_NAME} build ${env.BUILD_NUMBER}")
+        }
+
+        always {
+            cleanWs()
+        }
+    }
+}
