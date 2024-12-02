@@ -17,9 +17,9 @@ pipeline {
     }
 
     options {
-        timestamps()
-        timeout(time: 2, unit: 'HOURS')
-        buildDiscarder(logRotator(numToKeepStr: '5'))
+        timestamps() // Add timestamps to logs
+        timeout(time: 2, unit: 'HOURS') // Timeout after 2 hours
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Keep only the last 10 builds
     }
 
     stages {
