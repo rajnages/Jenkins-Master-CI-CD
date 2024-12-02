@@ -1,6 +1,17 @@
-// app.test.js
 const request = require('supertest');
-const app = require('./app'); // Assuming app.js is in the same directory
+const app = require('./app'); // Import the app without starting the server
+
+let server;
+
+beforeAll(() => {
+    // Start the server before tests run
+    server = app.listen(3000);
+});
+
+afterAll(() => {
+    // Close the server after tests finish
+    server.close();
+});
 
 describe('GET /', () => {
     it('should return Hello, World!', async () => {

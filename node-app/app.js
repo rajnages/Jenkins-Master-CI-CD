@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +16,11 @@ if (process.env.NODE_ENV === 'production') {
     console.log('Running in development mode');
 }
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// Export the app for testing purposes
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}
+
+module.exports = app;  // Export the app instance for testing
