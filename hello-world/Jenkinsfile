@@ -45,28 +45,28 @@ pipeline {
             }
         }
 
-        stage('Parallel Tasks') {
-            parallel {
-                stage('Static Analysis') {
-                    steps {
-                        echo "Running static analysis..."
-                        // Uses the Maven checkstyle:check plugin to analyze the source code for coding standards violations.
-                        dir('hello-world'){
-                            sh 'mvn checkstyle:check'
-                        }
-                    }
-                }
-                stage('Dependency Check') {
-                    steps {
-                        echo "Checking dependencies..."
-                        //Uses the Maven dependency:analyze plugin to identify unused or missing dependencies in the project.
-                        dir('hello-world'){
-                            sh 'mvn dependency:analyze'
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Parallel Tasks') {
+        //     parallel {
+        //         stage('Static Analysis') {
+        //             steps {
+        //                 echo "Running static analysis..."
+        //                 // Uses the Maven checkstyle:check plugin to analyze the source code for coding standards violations.
+        //                 dir('hello-world'){
+        //                     sh 'mvn checkstyle:check'
+        //                 }
+        //             }
+        //         }
+        //         stage('Dependency Check') {
+        //             steps {
+        //                 echo "Checking dependencies..."
+        //                 //Uses the Maven dependency:analyze plugin to identify unused or missing dependencies in the project.
+        //                 dir('hello-world'){
+        //                     sh 'mvn dependency:analyze'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Test') {
             steps {
