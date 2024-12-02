@@ -40,20 +40,30 @@ pipeline {
             }
         }
 
+        stage("Testing Plan"){
+            steps{
+                echo "This is normal step"
+            }
+        }
+
         stage('Parallel Tasks') {
             parallel {
                 stage('Static Analysis') {
                     steps {
                         echo "Running static analysis..."
                         // Uses the Maven checkstyle:check plugin to analyze the source code for coding standards violations.
-                        sh 'mvn checkstyle:check'
+                        dir('hello-world'){
+                            sh 'mvn checkstyle:check'
+                        }
                     }
                 }
                 stage('Dependency Check') {
                     steps {
                         echo "Checking dependencies..."
                         //Uses the Maven dependency:analyze plugin to identify unused or missing dependencies in the project.
-                        sh 'mvn dependency:analyze'
+                        dir('hello-world'){
+                            sh 'mvn dependency:analyze'
+                        }
                     }
                 }
             }
