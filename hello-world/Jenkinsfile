@@ -26,8 +26,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Get code from GitHub repository
-                git branch: ${params.BRANCH},
-                    url: GIT_URL
+                git branch: "${params.BRANCH}", url: GIT_URL
             }
         }
 
