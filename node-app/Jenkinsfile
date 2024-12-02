@@ -28,6 +28,13 @@ pipeline {
                 git branch: BRANCH, url: GIT_URL
             }
         }
+        stage('Cleanup') {
+            steps {
+                script {
+                    sh "kill -9 $(lsof -t -i:3000)"  // Kill any process occupying port 3000
+                }
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
