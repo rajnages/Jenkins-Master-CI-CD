@@ -26,7 +26,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Get code from GitHub repository
-                git branch: 'main',
+                git branch: ${params.BRANCH},
                     url: GIT_URL
             }
         }
@@ -40,13 +40,21 @@ pipeline {
             }
         }
 
-        stage("Parallel Builds"){
-            parallel{
-                stage("msg"){
-                    echo "Normal msg"
+        stage('Parallel Tasks') {
+            parallel {
+                stage('Static Analysis') {
+                    steps {
+                        echo "Running static analysis..."
+                        // Uses the Maven checkstyle:check plugin to analyze the source code for coding standards violations.
+                        sh 'mvn checkstyle:check'
+                    }
                 }
-                stage("printing"){
-                    echo "Printing msg"
+                stage('Dependency Check') {
+                    steps {
+                        echo "Checking dependencies..."
+                        //Uses the Maven dependency:analyze plugin to identify unused or missing dependencies in the project.
+                        sh 'mvn dependency:analyze'
+                    }
                 }
             }
         }
