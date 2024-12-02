@@ -16,6 +16,12 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deployment Environment')
     }
 
+    options {
+        timestamps()
+        timeout(time: 2, unit: 'HOURS')
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     stages {
         stage('Checkout') {
             steps {
