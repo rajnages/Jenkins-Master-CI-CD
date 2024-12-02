@@ -32,7 +32,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    sh "kill -9 $(lsof -t -i:3000)"  // Kill any process occupying port 3000
+                    sh 'kill -9 $(lsof -t -i:3000)'  // Kill any process occupying port 3000
                 }
             }
         }
