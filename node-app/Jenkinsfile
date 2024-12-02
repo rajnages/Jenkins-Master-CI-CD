@@ -48,23 +48,15 @@ pipeline {
             }
         }
 
-        // stage('Test') {
-        //     steps {
-        //         dir('node-app') {
-        //             script {
-        //                 try {
-        //                     sh 'npm test -- --detectOpenHandles --forceExit'
-        //                 } finally {
-        //                     // Cleanup any hanging processes
-        //                     sh '''
-        //                         echo "Cleaning up test processes..."
-        //                         pkill -f "node" || true
-        //                     '''
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                dir('node-app') {
+                    script {
+                            sh 'npm test -- --detectOpenHandles --forceExit'
+                    }
+                }
+            }
+        }
 
         stage('Build') {
             steps {
