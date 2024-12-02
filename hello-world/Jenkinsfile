@@ -40,6 +40,17 @@ pipeline {
             }
         }
 
+        stage("Parallel Builds"){
+            parallel{
+                stage("msg"){
+                    echo "Normal msg"
+                }
+                stage("printing"){
+                    echo "Printing msg"
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 // Run Maven tests
