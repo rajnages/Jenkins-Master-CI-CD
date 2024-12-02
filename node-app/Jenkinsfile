@@ -28,6 +28,7 @@ pipeline {
                 git branch: BRANCH, url: GIT_URL
             }
         }
+
         stage('Cleanup') {
             steps {
                 script {
@@ -43,6 +44,8 @@ pipeline {
                         env.NODE_ENV = 'production'
                     } else if (params.ENVIRONMENT == 'qa') {
                         env.NODE_ENV = 'qa'
+                    } else {
+                        env.NODE_ENV = 'development'
                     }
                     echo "NODE_ENV set to ${env.NODE_ENV}"
                 }
