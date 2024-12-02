@@ -32,9 +32,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Run Maven build
+                // Run Maven clean and install (which includes build and test phases)
                 dir('hello-world') {
-                    sh 'mvn clean compile'
+                    sh 'mvn clean install'
                 }
             }
         }
