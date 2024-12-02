@@ -162,3 +162,46 @@ Monitoring
 Performance
 Metrics
 Dashboard View
+
+====================================================================================================
+
+SonarQube Scanner:
+=> SonarQube Scanner is a tool used to analyze the quality of source code. It is part of the SonarQube platform, which is focused on code quality, security, and maintainability.
+
+The scanner works by scanning the codebase for:
+1. Code quality issues: Detects potential bugs, vulnerabilities, and code smells.
+2. Static analysis: Inspects code without executing it.
+3. Coding standards compliance: Ensures code adheres to predefined rules and best practices.
+4. Security vulnerabilities: Identifies security flaws like SQL injection, cross-site scripting, etc.
+
+Why is SonarQube Scanner Used?
+1. To maintain clean code that is readable, maintainable, and less prone to bugs.
+2. To enforce coding standards and improve developer productivity.
+3. To identify security vulnerabilities during the development phase.
+4. To ensure the software meets the required quality gates before deployment.
+
+
+Trivy Scanner:
+1. Trivy is a security scanning tool focused on container images, file systems, and Git repositories.
+
+It detects:
+1. Known vulnerabilities: In open-source software, libraries, or dependencies used in container images.
+2. Configuration issues: Misconfigurations in Kubernetes, Terraform files, and Docker images.
+3. License issues: Non-compliance with open-source licenses.
+4. Trivy also integrates with DevOps pipelines to scan container images or infrastructure-as-code files during the build and deployment process.
+
+Why is Trivy Scanner Used?
+1. To ensure secure container images and infrastructure by detecting vulnerabilities early.
+2. To protect against supply chain attacks by scanning for vulnerabilities in dependencies.
+3. To enforce compliance with security best practices in cloud-native environments.
+
+
+What is JFrog?
+JFrog is a DevOps tool primarily known for JFrog Artifactory, which is a universal artifact repository manager. It supports the management and storage of software packages or "artifacts" (e.g., binaries, libraries, container images) used in development, testing, and deployment.
+
+Why is JFrog Artifactory Used?
+1. Artifact Storage and Versioning: Keeps a secure, versioned history of builds and dependencies.
+2. Centralized Repository: Acts as a single source of truth for binaries and dependencies in a DevOps pipeline.
+3. Dependency Management: Ensures the correct versions of dependencies are used across environments.
+4. Integration with DevSecOps: Scans for vulnerabilities (via JFrog Xray) to ensure artifact security.
+5. Enhanced CI/CD Pipelines: Streamlines artifact promotion between development, QA, staging, and production.

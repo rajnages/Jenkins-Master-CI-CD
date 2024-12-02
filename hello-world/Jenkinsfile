@@ -10,6 +10,12 @@ pipeline {
         GIT_URL = "https://github.com/rajnages/Jenkins-Master-CI-CD.git"
         // SONAR_URL = "http://localhost:9000" // SonarQube server URL
     }
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Deployment Environment')
+    }
+
     stages {
         stage('Checkout') {
             steps {
