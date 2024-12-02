@@ -29,17 +29,10 @@ pipeline {
             }
         }
 
-        // stage('Cleanup') {
-        //     steps {
-        //         script {
-        //             sh 'kill -9 $(lsof -t -i:3000)'  // Kill any process occupying port 3000
-        //         }
-        //     }
-        // }
-
         stage('Install Dependencies') {
             steps {
                 script {
+                    // Set NODE_ENV based on selected environment
                     if (params.ENVIRONMENT == 'prod') {
                         env.NODE_ENV = 'production'
                     } else if (params.ENVIRONMENT == 'qa') {
@@ -58,17 +51,16 @@ pipeline {
         stage('Test') {
             steps {
                 dir('node-app'){
-                    sh 'npm test -- --detectOpenHandles'
-                }
-            }
-            post {
-                always {
-                    junit '**/test-results/**/*.xml'
-                    publishHTML(target: [
-                        reportName: 'Test Coverage',
-                        reportDir: 'coverage',
-                        reportFiles: 'index.html'
-                    ])
+                    script {
+                       try {
+                          sh 'npm test -- --detectOpenHandles --forceExit'
+                       } finally {
+                        // Cleanup any hanging processes
+                          sh '''
+                            echo "Cleaning up test processes..."
+                            pkill -f "node" || true
+                            '''
+                      }
                 }
             }
         }

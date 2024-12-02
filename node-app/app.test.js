@@ -1,22 +1,21 @@
+const app = require('./app');
 const request = require('supertest');
-const app = require('./app'); // Import the app without starting the server
-
 let server;
 
-beforeAll(() => {
-    // Start the server before tests run
-    server = app.listen(3000);
+beforeAll(async () => {
+    // Use a different port for testing
+    server = app.listen(3001);
 });
 
-afterAll(() => {
-    // Close the server after tests finish
-    server.close();
+afterAll(async () => {
+    await server.close();
 });
 
 describe('GET /', () => {
     it('should return Hello, World!', async () => {
-        const res = await request(app).get('/');
-        expect(res.text).toBe('Hello, World!');
-        expect(res.status).toBe(200);
+        const response = await request(app)
+            .get('/')
+            .expect(200);
+        expect(response.text).toBe('Hello, World!');
     });
 });
